@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const APIError = require('../misc/APIError.js');
 const config = require('../configs');
+const constants = require('../constants.js');
 
 const authenticateUser = (required = false) => {
 	return async (ctx, next) => {
@@ -22,4 +23,12 @@ const authenticateUser = (required = false) => {
 	}
 };
 
-module.exports = { authenticateUser };
+const isNotPatient = async (ctx, next) => {
+	if (ctx.user.role == constants.ROLE_PATIENT) {
+		throw new APIError(401, "You are not allowed to send approval request");
+		return;
+	}
+	await next();
+};
+
+module.exports = { authenticateUser, isNotPatient };

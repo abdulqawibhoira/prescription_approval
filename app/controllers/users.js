@@ -11,7 +11,7 @@ const userLogin = async (ctx, next) => {
     if (!userDetails) {
         throw new APIError(400, "Invalid Username Or Password");
     }
-    userDetails.accessTokenDetails = tokenHelper.generateJWTToken({ userId: userDetails['_id'].toString() });
+    userDetails.accessTokenDetails = tokenHelper.generateJWTToken({ userId: userDetails['_id'].toString(), role: userDetails.role });
     ctx.body = successResponse({ userDetails });
 }
 
