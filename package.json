@@ -1,0 +1,19 @@
+{
+  "name": "prescription_approval",
+  "version": "1.0.0",
+  "description": "Presciption approval system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Abdul Qawi Bhoira",
+  "license": "ISC",
+  "dependencies": {
+    "convict": "^4.3.0",
+    "koa": "^2.5.1",
+    "koa-body": "^4.0.3",
+    "koa-router": "^7.4.0",
+    "mongodb": "^3.0.10"
+  }
+}
