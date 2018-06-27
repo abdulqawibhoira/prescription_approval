@@ -5,3 +5,5 @@ function define(name, value) {
     });
 }
 
+//Database Collection Names 
+define("COLLECTION_USERS", "users");

@@ -5,7 +5,7 @@ const koaBody = require('koa-body');
 const config = require('./app/configs');
 const router = require('./app/routes');
 const logMiddleWare = require('./app/misc/logData.js');
-const { connect } = require('./app/mongoHelper/connect.js');
+const { connectMongo } = require('./app/mongoHelper/connect.js');
 
 
 if (cluster.isMaster) {
@@ -42,7 +42,7 @@ if (cluster.isMaster) {
     app.use(router.allowedMethods());
 
     //connect to mongo
-    connect();
+    connectMongo();
     
     const port = config.get('port');
 

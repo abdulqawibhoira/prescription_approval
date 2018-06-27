@@ -35,6 +35,18 @@ let config = convict({
             format: "*",
             default: 10,
         }
+    },
+    jwt: {
+        secretKey: {
+            doc: "Secret Key to generate acces tokens",
+            format: "*",
+            default: "##prescription_approval##",
+        },
+        expiresIn: {
+            doc: "Access token expiry time",
+            format: "*",
+            default: "180 days",
+        },
     }
 });
 

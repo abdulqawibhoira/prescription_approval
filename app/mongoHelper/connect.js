@@ -3,7 +3,7 @@ const config = require('../configs');
 
 const state = { db: null };
 
-const connect = () => {
+const connectMongo = () => {
     if (state.db) {
         return;
     }
@@ -23,10 +23,10 @@ const connect = () => {
     });
 };
 
-const get = () => {
+const getConnection = () => {
     return state.db;
 }
-module.exports = { connect, get };
+module.exports = { connectMongo, getConnection };
 
 
 
