@@ -1,7 +1,7 @@
 const config = require('../configs');
 const { getConnection } = require('./connect.js');
 
-const findOne = async (collection, filter, project) => {
+const findOne = async (collection, { filter, project }) => {
     return await getConnection().collection(collection).find(filter).project(project).limit(1).next();
 };
 
@@ -13,7 +13,7 @@ const create = async (collection, data) => {
     return await getConnection().collection(collection).insertOne(data);
 };
 
-const findAll = async (collection, filter, project, sort) => {
+const findAll = async (collection, { filter, project, sort }) => {
     return await getConnection().collection(collection).find(filter).project(project).sort(sort).toArray();
 };
 

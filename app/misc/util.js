@@ -1,3 +1,6 @@
+
+const ObjectID = require('mongodb').ObjectID;
+
 const validateRequired = (requiredArray, validateObject) => {
     for (const param of requiredArray) {
         if (!validateObject[param]) {
@@ -7,4 +10,13 @@ const validateRequired = (requiredArray, validateObject) => {
     return { isValidated: 1, message: "OK" };
 };
 
-module.exports = { validateRequired };
+const validateObjectIds = (idArray) => {
+    for (const id of idArray) {
+        if (!ObjectID.isValid(id)) {
+            return false;
+        }
+    }
+    return true;
+};
+
+module.exports = { validateRequired, validateObjectIds };

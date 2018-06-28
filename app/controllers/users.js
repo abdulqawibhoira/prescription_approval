@@ -15,4 +15,9 @@ const userLogin = async (ctx, next) => {
     ctx.body = successResponse({ userDetails });
 }
 
-module.exports = { userLogin };
+const create = async (ctx, next) => {
+    const result = await mongoQuery.create(constants.COLLECTION_USERS, ctx.request.body);
+    ctx.body = successResponse({ message: "User Added" });
+};
+
+module.exports = { userLogin, create };
