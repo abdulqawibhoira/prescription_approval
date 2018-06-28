@@ -1,0 +1,53 @@
+ COLLECTION --> USERS
+
+{ 
+    "_id" : ObjectId("5b34b06ee5f0dc79b2fe4311"), 
+    "username" : "patient 1", 
+    "password" : "1234", 
+    "role" : "patient"
+}
+{ 
+    "_id" : ObjectId("5b34b101d643ce79d88e7841"), 
+    "username" : "Doctor A", 
+    "password" : "1234", 
+    "role" : "doctor"
+}
+
+
+
+
+ COLLECTION --> APPROVALS 
+
+{ 
+    "_id" : ObjectId("5b34b7a36a89ac7bae681bf4"), 
+    "prescriptionDetails" : {
+        "_id" : ObjectId("5b34b773c50c2a7baf2845c2"), 
+        "prescriptionTitle" : "title1", 
+        "prescriptionDate" : NumberInt(20180101), 
+        "userid" : ObjectId("5b34b06ee5f0dc79b2fe4311")
+    }, 
+    "requestedByUserDetails" : {
+        "_id" : ObjectId("5b34b101d643ce79d88e7841"), 
+        "username" : "Doctor A"
+    }, 
+    "approvalStatus" : "approved"
+}
+
+
+
+
+ COLLECTION --> PRESCRIPTIONS 
+
+{
+    "_id" : ObjectId("5b34b773c50c2a7baf2845c2"), 
+    "prescriptionTitle" : "title1", 
+    "prescriptionDate" : NumberInt(20180101), 
+    "prescriptionDescription" : "description1", 
+    "prescriptionOtherDetails" : {
+
+    }, 
+    "userid" : ObjectId("5b34b06ee5f0dc79b2fe4311"), 
+    "approvedUserIds" : [
+        ObjectId("5b34b101d643ce79d88e7841")
+    ]
+}

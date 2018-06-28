@@ -10,6 +10,7 @@ const getById = async (ctx, next) => {
     if (!util.validateObjectIds([ctx.params.prescriptionId])) {
         throw new APIError(400, "Invalid Prescription Id");
     }
+    // Filter for a given ID as well as if this user is allowed to access this prescription
     const filter = {
         '_id': new ObjectID(ctx.params.prescriptionId),
         approvedUserIds: new ObjectID(ctx.user.userId)
@@ -25,6 +26,7 @@ const getByUserId = async (ctx, next) => {
     if (!util.validateObjectIds([ctx.params.userid])) {
         throw new APIError(400, "Invalid User Id");
     }
+    // Filter for a given user ID and and prescription allowed to access to this user
     const filter = {
         'userid': new ObjectID(ctx.params.userid),
         approvedUserIds: new ObjectID(ctx.user.userId)

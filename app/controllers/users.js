@@ -11,6 +11,10 @@ const userLogin = async (ctx, next) => {
     if (!userDetails) {
         throw new APIError(400, "Invalid Username Or Password");
     }
+    /** generate Access token on successful login. JWT is used to genarate access token.
+    *   access token generated would be passed in "Authorization" header for all the requests which requires user's Authentication.
+    *   User Id And Role is stored as a PAYLOAD data of an access token 
+    */
     userDetails.accessTokenDetails = tokenHelper.generateJWTToken({ userId: userDetails['_id'].toString(), role: userDetails.role });
     ctx.body = successResponse({ userDetails });
 }

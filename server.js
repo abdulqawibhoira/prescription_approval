@@ -26,12 +26,17 @@ if (cluster.isMaster) {
         multipart: true
     }));
 
-    // Catch All Errors
+    // Allow CORS 
+    app.use(require('./app/middlewares/cors.js'));
+
+    // This Middleware will catch ALL Errors on all routes
     app.use(async (ctx, next) => {
         try {
+            // new object created to add debug log specific data/message throughout request
             ctx.logExtra = {};
             await next();
         } catch (e) {
+            //handle API error Response
             require('./app/misc/errorHandling.js')(e, ctx);
         }
         logMiddleWare.logData(ctx);
@@ -43,7 +48,7 @@ if (cluster.isMaster) {
 
     //connect to mongo
     connectMongo();
-    
+
     const port = config.get('port');
 
     app.listen(port, function () {
