@@ -16,7 +16,7 @@ npm install
 ```
 
 ```no-highlight 
-RUN node server.js
+node server.js
 ```
 
  - Server will accept request on port 3000
@@ -34,11 +34,11 @@ RUN node server.js
 - Reference :  https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
 
 ```no-highlight 
-RUN docker build -t approval-system-apis .
+docker build -t approval-system-apis .
 ```
 
 ```no-highlight 
-RUN docker run -p 3000:3000 -d --name approval-system-container approval-system-apis
+docker run -p 3000:3000 -d --name approval-system-container approval-system-apis
 ```
 
 
