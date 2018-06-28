@@ -4,7 +4,7 @@ const assert = require('assert');
 
 const approvalApiRequest = request(`http://localhost:${config.get('port')}/v1`);
 
-describe('Doctor Should be able to view prescription if approved by user', () => {
+describe('Patient should see list of pending approvals when doctors requests for his prescriptions', () => {
     var doctorDetails, doctorBDetails, patienDetailDetails, prescriptionId, doctorAccessToken, doctorBAccessToken, patientAccesstoken;
     it('should create a dummy doctor - Doctor A', () => {
         return approvalApiRequest
