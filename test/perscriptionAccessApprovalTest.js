@@ -143,7 +143,7 @@ describe('Doctor should be able to view prescription if approved by user', () =>
                 assert.fail(err);
             });
     });
-    it('Again Doctor A try to access Patients Prescription. API should return detailed prescription of a user', () => {
+    it('Again Doctor A try to access Patients Prescription. API should now return detailed prescription of a user', () => {
         return approvalApiRequest
             .get(`/prescriptions/${prescriptionId}`)
             .set('Accept', 'application/json')
