@@ -59,7 +59,8 @@ const pendingApprovalList = async (ctx, next) => {
 const checkIsApprovalAlreadyRequested = async (ctx) => {
     const filter = {
         'prescriptionDetails._id': new ObjectID(ctx.request.body.prescriptionId),
-        'requestedByUserDetails._id': new ObjectID(ctx.user.userId)
+        'requestedByUserDetails._id': new ObjectID(ctx.user.userId),
+        approvalStatus: { '$ne': constants.APPROVAL_STATUS_REJECTED }
     };
     return await mongoQuery.findOne(constants.COLLECTION_APPROVALS, { filter });
 };
