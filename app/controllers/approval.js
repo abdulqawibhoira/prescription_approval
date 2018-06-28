@@ -21,7 +21,7 @@ const requestApproval = async (ctx, next) => {
     const approvalData = await getApprovalRecordData(ctx);
     // Add new Approval Details in a database 
     const approval = await mongoQuery.create(constants.COLLECTION_APPROVALS, approvalData);
-    ctx.body = successResponse({ message: "Prescription approval request sent to user" });
+    ctx.body = successResponse({ approvalData });
 };
 
 const updateStatus = async (ctx, next) => {

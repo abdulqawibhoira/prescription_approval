@@ -15,13 +15,26 @@ const userLogin = async (ctx, next) => {
     *   access token generated would be passed in "Authorization" header for all the requests which requires user's Authentication.
     *   User Id And Role is stored as a PAYLOAD data of an access token 
     */
-    userDetails.accessTokenDetails = tokenHelper.generateJWTToken({ userId: userDetails['_id'].toString(), role: userDetails.role });
+    userDetails.accessTokenDetails = tokenHelper.generateJWTToken({
+        userId: userDetails['_id'].toString(),
+        role: userDetails.role
+    });
     ctx.body = successResponse({ userDetails });
 }
 
 const create = async (ctx, next) => {
+    const userDetails = await checkIsUserExists(ctx.request.body.username);
+    if (userDetails) {
+        ctx.body = successResponse({ user: userDetails });
+        return
+    }
     const result = await mongoQuery.create(constants.COLLECTION_USERS, ctx.request.body);
     ctx.body = successResponse({ user: ctx.request.body });
+};
+
+const checkIsUserExists = async (username) => {
+    const filter = { username };
+    return await mongoQuery.findOne(constants.COLLECTION_USERS, { filter });
 };
 
 module.exports = { userLogin, create };
