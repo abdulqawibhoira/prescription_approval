@@ -19,9 +19,18 @@ npm install
 node server.js
 ```
 
- - Server will accept request on port 3000
+- Server will accept request on port 3000
 
- - Port can be changed By editing environment specific file in configs folder
+- Port can be changed By editing environment specific file in configs folder
+
+## Test Cases
+
+- I have covered testing of this assignment's use cases by implementing test cases
+- To Test use cases run the following command. (make sure API server is up and running)
+```no-highlight 
+npm test
+```
+
 
 ## Steps to run API server in a docker
 
@@ -42,7 +51,7 @@ docker run -p 3000:3000 -d --name approval-system-container approval-system-apis
 ```
 
 
- - Refer to mongoSchema.txt File for better understanding of code and logic written in API.
+- Refer to mongoSchema.txt File for better understanding of code and logic written in API.
 
 
 
@@ -50,4 +59,4 @@ docker run -p 3000:3000 -d --name approval-system-container approval-system-apis
 
 - Postman Collection Link : https://www.getpostman.com/collections/453ab18d3f889fc7b5a5
 
-- Environment file : approval system dev.postman_environment.json (root directory of a project)
+- Environment file : approvalSystem.postman_environment.json (root directory of a project)
