@@ -7,7 +7,7 @@ const tokenHelper = require('../misc/tokenHelper.js');
 
 const userLogin = async (ctx, next) => {
     const filter = { username: ctx.request.body.username, password: ctx.request.body.password };
-    const userDetails = await mongoQuery.findOne(constants.COLLECTION_USERS, filter, {});
+    const userDetails = await mongoQuery.findOne(constants.COLLECTION_USERS, { filter });
     if (!userDetails) {
         throw new APIError(400, "Invalid Username Or Password");
     }
@@ -17,7 +17,7 @@ const userLogin = async (ctx, next) => {
 
 const create = async (ctx, next) => {
     const result = await mongoQuery.create(constants.COLLECTION_USERS, ctx.request.body);
-    ctx.body = successResponse({ message: "User Added" });
+    ctx.body = successResponse({ user: ctx.request.body });
 };
 
 module.exports = { userLogin, create };

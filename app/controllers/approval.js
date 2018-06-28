@@ -43,7 +43,7 @@ const updateStatus = async (ctx, next) => {
 const pendingApprovalList = async (ctx, next) => {
     const filter = {
         'prescriptionDetails.userid': new ObjectID(ctx.user.userId),
-        status: constants.APPROVAL_STATUS_PENDING
+        approvalStatus: constants.APPROVAL_STATUS_PENDING
     };
     const pendingApprovalList = await mongoQuery.findAll(constants.COLLECTION_APPROVALS, { filter });
     ctx.body = successResponse({ pendingApprovalList })
@@ -70,8 +70,9 @@ const getApprovalRecordData = async (ctx) => {
 };
 
 const getPrescriptionDetails = async (ctx) => {
-    const filter = { '_id': new ObjectID(ctx.request.body.prescriptionId) }
-    const prescriptionDetails = await mongoQuery.findOne(constants.COLLECTION_PRESCRIPTIONS, { filter });
+    const filter = { '_id': new ObjectID(ctx.request.body.prescriptionId) };
+    const project = { prescriptionTitle: 1, prescriptionDate: 1, userid: 1 };
+    const prescriptionDetails = await mongoQuery.findOne(constants.COLLECTION_PRESCRIPTIONS, { filter, project });
     if (!prescriptionDetails) {
         throw new APIError(400, "Invalid prescription id");
     }
@@ -79,8 +80,9 @@ const getPrescriptionDetails = async (ctx) => {
 };
 
 const getRequestedByUserDetails = async (ctx) => {
-    const filter = { '_id': new ObjectID(ctx.user.userId) }
-    return await mongoQuery.findOne(constants.COLLECTION_USERS, { filter });
+    const filter = { '_id': new ObjectID(ctx.user.userId) };
+    const project = { username: 1 };
+    return await mongoQuery.findOne(constants.COLLECTION_USERS, { filter, project });
 };
 
 const getRequestedApprovalDetails = async (ctx) => {
@@ -97,7 +99,7 @@ const isValidStatus = (status) => {
 };
 
 const IsApprovalBelongsToUser = (requestedApprovalDetails, userId) => {
-    return requestedApprovalDetails.prescriptionDetails["userid"].toString === userId;
+    return requestedApprovalDetails.prescriptionDetails["userid"].toString() === userId;
 };
 
 const updateApprovalStatus = async (ctx) => {
@@ -108,7 +110,7 @@ const updateApprovalStatus = async (ctx) => {
 
 const addToPrescriptionsApprovedUserIds = async (requestedApprovalDetails) => {
     const filter = { '_id': requestedApprovalDetails.prescriptionDetails["_id"] };
-    const updateData = { "$push": { approvedUserIds: requestedApprovalDetails.requestedByUserDetails["_id"] } };
+    const updateData = { "$addToSet": { approvedUserIds: requestedApprovalDetails.requestedByUserDetails["_id"] } };
     await mongoQuery.update(constants.COLLECTION_PRESCRIPTIONS, filter, updateData);
 };
 

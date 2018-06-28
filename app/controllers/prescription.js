@@ -13,8 +13,8 @@ const getById = async (ctx, next) => {
     const filter = {
         '_id': new ObjectID(ctx.params.prescriptionId),
         approvedUserIds: new ObjectID(ctx.user.userId)
-    }
-    const prescriptionDetails = await mongoQuery.findOne(constants.COLLECTION_PRESCRIPTIONS, { filter });
+    };
+    const prescriptionDetails = await mongoQuery.findOne(constants.COLLECTION_PRESCRIPTIONS, { filter, project: getPrescriptionFields() });
     if (!prescriptionDetails) {
         throw new APIError(403, "You are not allowed to view this prescription");
     }
@@ -22,21 +22,25 @@ const getById = async (ctx, next) => {
 };
 
 const getByUserId = async (ctx, next) => {
-    if (!util.validateObjectIds([ctx.params.userId])) {
-        throw new APIError(400, "Invalid Approval Id");
+    if (!util.validateObjectIds([ctx.params.userid])) {
+        throw new APIError(400, "Invalid User Id");
     }
     const filter = {
-        'userid': new ObjectID(ctx.params.userId),
+        'userid': new ObjectID(ctx.params.userid),
         approvedUserIds: new ObjectID(ctx.user.userId)
     };
-    const userPerscriptions = await mongoQuery.findAll(constants.COLLECTION_PRESCRIPTIONS, { filter });
+    const userPerscriptions = await mongoQuery.findAll(constants.COLLECTION_PRESCRIPTIONS, { filter, project: getPrescriptionFields() });
     ctx.body = successResponse({ userPerscriptions });
 };
 
 const create = async (ctx, next) => {
     ctx.request.body.userid = new ObjectID(ctx.request.body.userid);
     const result = await mongoQuery.create(constants.COLLECTION_PRESCRIPTIONS, ctx.request.body);
-    ctx.body = successResponse({ message: "Prescription Added" });
+    ctx.body = successResponse({ prescription: ctx.request.body });
+};
+
+const getPrescriptionFields = () => {
+    return { prescriptionTitle: 1, prescriptionDate: 1, prescriptionDescription: 1, prescriptionOtherDetails: 1 };
 };
 
 module.exports = { getById, getByUserId, create };
