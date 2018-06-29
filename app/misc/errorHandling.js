@@ -5,7 +5,7 @@ module.exports = (e, ctx) => {
     //** Here we can send errors to error tracking tools such as rollbar or airbrake etc to monitor errors on production **/
     console.log(e);
     let message = e.message;
-    //In Production Hide Actual Message
+    //In Production, If error other than APIError is thrown, Hide Actual Message
     if (!e.htttpStatusCode && config.get('env') == "production") {
         message = constants.INTERNAL_SERVER_ERROR_MESSAGE;
     }

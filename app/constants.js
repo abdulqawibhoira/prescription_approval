@@ -19,3 +19,6 @@ define("APPROVAL_STATUS_REJECTED", "rejected");
 define("ROLE_DOCTOR", "doctor");
 define("ROLE_PHARMACIST", "pharmacist");
 define("ROLE_PATIENT", "patient");
+
+//Internal server error message
+define("INTERNAL_SERVER_ERROR_MESSAGE", "Something went wrong. Please try again");
